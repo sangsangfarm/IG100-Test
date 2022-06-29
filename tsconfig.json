@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2018", "es2017", "es2016"],
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2018",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "baseUrl": ".",
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "moduleResolution": "node",
+    "paths": {},
+    "esModuleInterop": true,
+    "rootDir": "src",
+    "outDir": "build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "include": ["**/*.ts", "test/**/*.ts", "commitlint.config.js"],
+  "exclude": ["node_modules"]
+}

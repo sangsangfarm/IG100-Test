@@ -1,0 +1,21 @@
+FROM node:16-alpine
+
+RUN apt-get update \
+  && apt-get install -y make gcc g++ python3 \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
+
+WORKDIR /app/
+
+COPY package*.json ./
+
+RUN yarn install
+
+COPY . ./
+
+RUN yarn build
+
+EXPOSE 9229
+
+USER node
+
+CMD ["node", "--inspect=0.0.0.0:9229", "build/app.js"]

@@ -1,0 +1,43 @@
+# BUILDER
+FROM arm32v7/node:16-alpine as builder
+
+RUN apk add --no-cache --virtual .build-deps linux-headers make gcc g++ python3
+
+WORKDIR /app/
+
+COPY .npmrc ./
+
+COPY package.json ./
+
+COPY yarn.lock ./
+
+RUN yarn install
+
+COPY . ./
+
+RUN yarn build
+
+RUN apk del .build-deps
+
+# RUNNING
+FROM arm32v7/node:16-alpine
+
+RUN apk add --no-cache --virtual .build-deps linux-headers make gcc g++ python3
+
+WORKDIR /app/
+
+COPY .npmrc ./
+
+COPY package.json ./
+
+COPY yarn.lock ./
+
+RUN yarn install --production
+
+COPY --from=builder /app/build ./build
+
+RUN apk del .build-deps
+
+EXPOSE 80
+
+CMD ["node", "build/app.js"]
